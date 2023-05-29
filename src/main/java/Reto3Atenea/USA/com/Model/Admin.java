@@ -1,7 +1,6 @@
 package Reto3Atenea.USA.com.Model;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 @Entity
 @Table (name = "admin")
 public class Admin {

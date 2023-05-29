@@ -59,7 +59,7 @@ public class AdminService {
             return admin;
         }
     }
-    public boolean deleteAdmin(int id){
+    public boolean delete (int id){
         Boolean respuesta = getAdmin(id).map(admin ->{
             adminRepository.delete(admin);
             return true;
