@@ -16,7 +16,8 @@ public class Car {
 
     private String brand;
 
-    private Integer year;
+    @Column (name = "yyear", length = 4)
+    private int year;
 
     private String description;
 
