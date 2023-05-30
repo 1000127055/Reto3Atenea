@@ -1,11 +1,18 @@
 package Reto3Atenea.USA.com.Service;
 
 import Reto3Atenea.USA.com.Model.Car;
+import Reto3Atenea.USA.com.Model.Client;
+import Reto3Atenea.USA.com.Model.DTOs.CompletedAndCancelled;
+import Reto3Atenea.USA.com.Model.DTOs.TotalAndClient;
 import Reto3Atenea.USA.com.Model.Reservation;
 import Reto3Atenea.USA.com.Repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,6 +69,52 @@ public class ReservationService {
             reservationRepository.delete(reservation);
             return true;
         }).orElse(false);
+
+        return respuesta;
+    }
+
+    public List<Reservation> getReservationsBetweenDatesReport(String fechaA, String fechaB){
+        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date a = new Date();
+        Date b = new Date();
+
+        try{
+            a = parser.parse(fechaA);
+            b = parser.parse(fechaB);
+        }catch (ParseException exception){
+            exception.printStackTrace();
+        }
+
+        if (a.before(b)){
+            return reservationRepository.getReservationsBetweenDates(a, b);
+        }else{
+            return new ArrayList<>();
+        }
+    }
+
+
+    public CompletedAndCancelled getReservationStatusReport(){
+        List<Reservation> completed = reservationRepository.getReservationsByStatus("completed");
+        List<Reservation> cancelled = reservationRepository.getReservationsByStatus("cancelled");
+
+        Long cantidadCompletada = (long) completed.size();
+
+        Long cantidadCancelada = (long) cancelled.size();
+
+        CompletedAndCancelled respuesta = new CompletedAndCancelled(cantidadCompletada, cantidadCancelada);
+
+        return respuesta;
+    }
+
+    public List<TotalAndClient> getTopClientsReport(){
+        List<TotalAndClient> respuesta =new ArrayList<>();
+
+        List<Object[]> reporte = reservationRepository.getTotalReservationsByClient();
+
+        for (Object[] pareja: reporte) {
+            respuesta.add(new TotalAndClient( (Long) pareja[1], (Client) pareja[0] ));
+        }
 
         return respuesta;
     }
