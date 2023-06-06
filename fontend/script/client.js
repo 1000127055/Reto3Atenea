@@ -15,7 +15,7 @@ function obtener(){
         redirect: 'follow'
     };
     
-    fetch("http://164.152.21.37:8080/api/Client/all", requestOptions)
+    fetch("164.152.21.37:8080/api/Client/all", requestOptions)
     .then(response => response.json())
     .then(result => {
         result.forEach(element => {
@@ -42,7 +42,7 @@ function obtenerPorId(id){
         redirect: 'follow'
     };
     
-    fetch(`http://164.152.21.37:8080/api/Client/${id}`, requestOptions)
+    fetch(`164.152.21.37:8080/api/Client/${id}`, requestOptions)
     .then(response => response.json())
     .then(result => {
         inputId.value = result.idClient
@@ -60,7 +60,7 @@ function eliminar(){
         redirect: 'follow'
     };
     
-    fetch(`http://164.152.21.37:8080/api/Client/${inputId.value}`, requestOptions)
+    fetch(`164.152.21.37:8080/api/Client/${inputId.value}`, requestOptions)
     .then(response => window.location.reload())
     .catch(error => console.log('error', error));
 }
@@ -84,7 +84,7 @@ function actualizar(){
     redirect: 'follow'
     };
 
-    fetch("http://164.152.21.37:8080/api/Client/update", requestOptions)
+    fetch("164.152.21.37:8080/api/Client/update", requestOptions)
     .then(response => {
         window.location.reload()
     })
@@ -109,7 +109,7 @@ function crear(){
     redirect: 'follow'
     };
 
-    fetch("http://164.152.21.37:8080/api/Client/save", requestOptions)
+    fetch("164.152.21.37:8080/api/Client/save", requestOptions)
     .then(response => {
         window.location.reload()
     })
